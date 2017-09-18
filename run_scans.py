@@ -8,7 +8,7 @@ burp = "burpsuite_pro_v1.7.27.jar"
 slack_token = "<yourstokenhere>"
 cache_fix = True
 slack_username = "niemand"
-
+slack_channel = "burpreports"
 
 def hostname_resolves(hostname):
     try:
@@ -47,13 +47,13 @@ while True:  ##I know, I know it's a while true
             print "[+] Host found in IP: %s" %socket.gethostbyname(domain)
             b = check_call(
                 ['curl', '-F', 'text="Starting script for {0}://{1}:{2} @{}"'.format(scheme, domain, port,slack_username), '-F',
-                 'channel=#burpreports', '-F', 'token={}'.format(slack_token),
+                 'channel=#{}'.format(slack_channel), '-F', 'token={}'.format(slack_token),
                  'https://slack.com/api/chat.postMessage'])
         else:
             print "[!] Skipping host, couldn't resolve DNS"
             b = check_call(
                 ['curl', '-F', 'text="Skipted for {0}://{1}:{2} @{}"'.format(scheme, domain, port, slack_username), '-F',
-                 'channel=#burpreports', '-F', 'token={}'.format(slack_token),
+                 'channel=#{}'.format(slack_channel), '-F', 'token={}'.format(slack_token),
                  'https://slack.com/api/chat.postMessage'])
             delete_host()
             continue
@@ -70,7 +70,7 @@ while True:  ##I know, I know it's a while true
 
 
         check_call(['curl', '-F', 'file=@{}'.format(html),'-F','initial_comment="Report {}://{}:{} @{}"'.format(scheme, domain, port, slack_username),
-                    '-F', 'channels=#burpreports', '-F', 'token={}'.format(slack_token),
+                    '-F', 'channels=#{}'.format(slack_channel), '-F', 'token={}'.format(slack_token),
                     'https://slack.com/api/files.upload'])
         Popen('mv {} {}/{}/'.format(html, output_folder, folder), shell=True, stderr=STDOUT)
 
