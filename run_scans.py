@@ -46,13 +46,13 @@ while True:  ##I know, I know it's a while true
         if hostname_resolves(domain):
             print "[+] Host found in IP: %s" %socket.gethostbyname(domain)
             b = check_call(
-                ['curl', '-F', 'text="Starting script for {0}://{1}:{2} @{}"'.format(scheme, domain, port,slack_username), '-F',
+                ['curl', '-F', 'text="Starting script for {0}://{1}:{2} @{3}"'.format(scheme, domain, port,slack_username), '-F',
                  'channel=#{}'.format(slack_channel), '-F', 'token={}'.format(slack_token),
                  'https://slack.com/api/chat.postMessage'])
         else:
             print "[!] Skipping host, couldn't resolve DNS"
             b = check_call(
-                ['curl', '-F', 'text="Skipted for {0}://{1}:{2} @{}"'.format(scheme, domain, port, slack_username), '-F',
+                ['curl', '-F', 'text="Skipted for {0}://{1}:{2} @{3}"'.format(scheme, domain, port, slack_username), '-F',
                  'channel=#{}'.format(slack_channel), '-F', 'token={}'.format(slack_token),
                  'https://slack.com/api/chat.postMessage'])
             delete_host()
